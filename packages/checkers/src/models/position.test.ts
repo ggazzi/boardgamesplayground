@@ -2,16 +2,8 @@ import { describe, it, expect } from 'bun:test';
 import fc from 'fast-check';
 
 import { Position, BOARD_WIDTH, BOARD_HEIGHT, BOARD_SIZE } from './position';
+import arbitrary from './arbitrary';
 
-function arbPosition(): fc.Arbitrary<Position> {
-  return fc.nat(BOARD_SIZE - 1).map(Position.fromIndex);
-}
-
-const arbitrary = {
-  position: arbPosition,
-};
-
-export default arbitrary;
 const arb = { ...fc, ...arbitrary };
 
 describe('Position', () => {

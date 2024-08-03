@@ -1,13 +1,6 @@
 import { describe, it, expect } from 'bun:test';
-import fc from 'fast-check';
 
 import { Player, opponent } from './player';
-
-export default {
-  player(): fc.Arbitrary<Player> {
-    return fc.constantFrom(Player.Black, Player.White);
-  }
-};
 
 describe('Player', () => {
   const PLAYERS = [Player.Black, Player.White];

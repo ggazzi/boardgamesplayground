@@ -1,38 +1,11 @@
 import { describe, it, expect } from 'bun:test';
 import fc from 'fast-check';
 
-import { CellState, BoardState } from './board';
+import { BoardState } from './board';
 import { BOARD_SIZE } from './position';
-import { Piece } from './piece';
+import arbitrary from './arbitrary';
 
-import position from './position.test';
-import player from './player.test';
-
-const arbi = { ...fc, ...player, ...position };
-
-function arbPiece(): fc.Arbitrary<Piece> {
-  return fc.record({
-    type: fc.constantFrom('man', 'king'),
-    player: arbi.player(),
-  });
-}
-
-function arbCellState(): fc.Arbitrary<CellState> {
-  return arbi.oneof(arbPiece(), arbi.constant(null));
-}
-
-function arbBoardState(): fc.Arbitrary<BoardState> {
-  return arbi.array(arbCellState(), { minLength: BOARD_SIZE, maxLength: BOARD_SIZE }).map(BoardState.fromArray);
-}
-
-const arbitrary = {
-  piece: arbPiece,
-  cellState: arbCellState,
-  boardState: arbBoardState,
-};
-
-export default arbitrary;
-const arb = { ...arbi, ...arbitrary };
+const arb = { ...fc, ...arbitrary };
 
 describe('BoardState', () => {
 
