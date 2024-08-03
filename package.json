@@ -1,5 +1,5 @@
 {
-  "name": "tictactoe",
+  "name": "boardgames",
   "private": "true",
   "workspaces": [
     "packages/*"
