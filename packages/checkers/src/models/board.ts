@@ -28,8 +28,7 @@ export class Position {
     }
     if (col < 0 || col >= BOARD_WIDTH) {
       throw new Error(`Invalid col ${col}, must be between 0 and ${BOARD_WIDTH}`);
-    }
-    return new Position(row * BOARD_WIDTH + col);
+    } return new Position(row * BOARD_WIDTH + col);
   }
 
   get row(): number {
@@ -73,6 +72,16 @@ export class BoardState {
 
   toArray(): CellState[] {
     return [...this.#cells];
+  }
+
+  get(pos: Position): CellState {
+    return this.#cells[pos.toIndex()];
+  }
+
+  set(pos: Position, value: CellState): BoardState {
+    const cells = [...this.#cells];
+    cells[pos.toIndex()] = value;
+    return new BoardState(cells);
   }
 }
 
