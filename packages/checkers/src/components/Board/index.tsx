@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Position, BOARD_WIDTH } from '../../models/position';
+import { Position, BOARD_WIDTH, BOARD_HEIGHT } from '../../models/position';
 import { BoardState, CellState } from '../../models/board';
 
 import './styles.css';
 
 function Board({ state }: BoardProps) {
   const style = {
-    '--num-rows': BOARD_WIDTH,
+    '--num-rows': BOARD_HEIGHT,
     '--num-columns': BOARD_WIDTH,
   } as React.CSSProperties;
 

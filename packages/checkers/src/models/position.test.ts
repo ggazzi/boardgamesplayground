@@ -1,12 +1,10 @@
 import { describe, it, expect } from 'bun:test';
 import fc from 'fast-check';
 
-import { Position, BOARD_WIDTH } from './position';
-
-const BOARD_ARRAY_SIZE = BOARD_WIDTH * BOARD_WIDTH;
+import { Position, BOARD_WIDTH, BOARD_HEIGHT, BOARD_SIZE } from './position';
 
 function arbPosition(): fc.Arbitrary<Position> {
-  return fc.nat(BOARD_ARRAY_SIZE - 1).map(Position.fromIndex);
+  return fc.nat(BOARD_SIZE - 1).map(Position.fromIndex);
 }
 
 const arbitrary = {
@@ -20,7 +18,7 @@ describe('Position', () => {
 
   describe('fromIndex', () => {
     it('is an inverse for toIndex', () => {
-      fc.assert(fc.property(arb.integer({ min: 0, max: BOARD_WIDTH * BOARD_WIDTH - 1 }), (index) => {
+      fc.assert(fc.property(arb.integer({ min: 0, max: BOARD_SIZE - 1 }), (index) => {
         return Position.fromIndex(index).toIndex() === index;
       }));
     });
@@ -32,15 +30,15 @@ describe('Position', () => {
     });
 
     it('throws an error when index is too large', () => {
-      fc.assert(fc.property(arb.integer({ min: BOARD_WIDTH * BOARD_WIDTH }), (index) => {
+      fc.assert(fc.property(arb.integer({ min: BOARD_SIZE }), (index) => {
         expect(() => Position.fromIndex(index)).toThrow();
       }));
     });
   })
 
   describe('new', () => {
-    const validRow = arb.integer({ min: 0, max: BOARD_WIDTH - 1 });
-    const invalidRow = arb.oneof(fc.integer({ max: -1 }), arb.integer({ min: BOARD_WIDTH }));
+    const validRow = arb.integer({ min: 0, max: BOARD_HEIGHT - 1 });
+    const invalidRow = arb.oneof(fc.integer({ max: -1 }), arb.integer({ min: BOARD_HEIGHT }));
 
     const validCol = arb.integer({ min: 0, max: BOARD_WIDTH - 1 });
     const invalidCol = arb.oneof(fc.integer({ max: -1 }), arb.integer({ min: BOARD_WIDTH }));

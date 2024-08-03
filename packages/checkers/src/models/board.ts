@@ -1,5 +1,5 @@
 import { Piece } from "./piece";
-import { Position, BOARD_WIDTH } from "./position";
+import { Position, BOARD_SIZE } from "./position";
 
 export type CellState = Piece | null;
 
@@ -11,11 +11,11 @@ export class BoardState {
   }
 
   static empty(): BoardState {
-    return new BoardState(Array(BOARD_WIDTH * BOARD_WIDTH).fill(null));
+    return new BoardState(Array(BOARD_SIZE).fill(null));
   }
 
   static fromArray(cells: CellState[]): BoardState {
-    if (cells.length !== BOARD_WIDTH * BOARD_WIDTH) {
+    if (cells.length !== BOARD_SIZE) {
       throw new Error(`Invalid number of cells: ${cells.length}`);
     }
     return new BoardState(cells);

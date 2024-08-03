@@ -1,4 +1,6 @@
 export const BOARD_WIDTH = 4;
+export const BOARD_HEIGHT = BOARD_WIDTH;
+export const BOARD_SIZE = BOARD_WIDTH * BOARD_HEIGHT;
 
 export class Position {
   #index: number;
@@ -13,14 +15,14 @@ export class Position {
    * and grouped by row.
    */
   static all(): Position[] {
-    return Array(BOARD_WIDTH * BOARD_WIDTH)
+    return Array(BOARD_SIZE)
       .fill(null)
       .map((_, index) => new Position(index));
   }
 
   static fromIndex(index: number): Position {
-    if (index < 0 || index >= BOARD_WIDTH * BOARD_WIDTH) {
-      throw new Error(`Invalid index ${index}, must be between 0 and ${BOARD_WIDTH * BOARD_WIDTH}`);
+    if (index < 0 || index >= BOARD_SIZE) {
+      throw new Error(`Invalid index ${index}, must be between 0 and ${BOARD_SIZE}`);
     }
     return new Position(index);
   }
@@ -30,8 +32,8 @@ export class Position {
   }
 
   static new(row: number, col: number): Position {
-    if (row < 0 || row >= BOARD_WIDTH) {
-      throw new Error(`Invalid row ${row}, must be between 0 and ${BOARD_WIDTH}`);
+    if (row < 0 || row >= BOARD_HEIGHT) {
+      throw new Error(`Invalid row ${row}, must be between 0 and ${BOARD_HEIGHT}`);
     }
     if (col < 0 || col >= BOARD_WIDTH) {
       throw new Error(`Invalid col ${col}, must be between 0 and ${BOARD_WIDTH}`);

@@ -2,13 +2,11 @@ import { describe, it, expect } from 'bun:test';
 import fc from 'fast-check';
 
 import { CellState, BoardState } from './board';
-import { BOARD_WIDTH } from './position';
+import { BOARD_SIZE } from './position';
 import { Piece } from './piece';
 
 import position from './position.test';
 import player from './player.test';
-
-const BOARD_ARRAY_SIZE = BOARD_WIDTH * BOARD_WIDTH;
 
 const arbi = { ...fc, ...player, ...position };
 
@@ -24,7 +22,7 @@ function arbCellState(): fc.Arbitrary<CellState> {
 }
 
 function arbBoardState(): fc.Arbitrary<BoardState> {
-  return arbi.array(arbCellState(), { minLength: BOARD_ARRAY_SIZE, maxLength: BOARD_ARRAY_SIZE }).map(BoardState.fromArray);
+  return arbi.array(arbCellState(), { minLength: BOARD_SIZE, maxLength: BOARD_SIZE }).map(BoardState.fromArray);
 }
 
 const arbitrary = {
@@ -39,21 +37,20 @@ const arb = { ...arbi, ...arbitrary };
 describe('BoardState', () => {
 
   describe('fromArray', () => {
-    const ARRAY_SIZE = BOARD_WIDTH * BOARD_WIDTH;
     it('is an inverse for toArray', () => {
-      fc.assert(fc.property(arb.array(arb.cellState(), { minLength: ARRAY_SIZE, maxLength: ARRAY_SIZE }), (cells) => {
+      fc.assert(fc.property(arb.array(arb.cellState(), { minLength: BOARD_SIZE, maxLength: BOARD_SIZE }), (cells) => {
         expect(BoardState.fromArray(cells).toArray()).toEqual(cells);
       }));
     })
 
     it('throws an error when the array is too small', () => {
-      fc.assert(fc.property(arb.array(arb.cellState(), { maxLength: ARRAY_SIZE - 1 }), (cells) => {
+      fc.assert(fc.property(arb.array(arb.cellState(), { maxLength: BOARD_SIZE - 1 }), (cells) => {
         expect(() => BoardState.fromArray(cells)).toThrow();
       }));
     });
 
     it('throws an error when the array is too large', () => {
-      fc.assert(fc.property(arb.array(arb.cellState(), { minLength: ARRAY_SIZE + 1 }), (cells) => {
+      fc.assert(fc.property(arb.array(arb.cellState(), { minLength: BOARD_SIZE + 1 }), (cells) => {
         expect(() => BoardState.fromArray(cells)).toThrow();
       }));
     });
