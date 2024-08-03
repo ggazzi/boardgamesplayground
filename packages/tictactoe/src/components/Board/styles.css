@@ -3,16 +3,20 @@
   aspect-ratio: 1 / 1;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
+
+  --color-player-X: #ff0000;
+  --color-player-O: #0000ff;
+  --color-player-none: #595959;
 }
 
 .board-cell {
   margin: 5%;
-  background: #595959;
+  background: var(--color-player-none);
   position: relative;
 }
 
 .mark-X {
-  background: #ff0000;
+  background: var(--color-player-X);
 }
 
 .board-cell.mark-X::before {
@@ -25,7 +29,7 @@
 }
 
 .board-cell.mark-O {
-  background: #0000ff;
+  background: var(--color-player-O);
 }
 
 .board-cell.mark-O::before {

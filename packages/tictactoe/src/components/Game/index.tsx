@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { Board as BoardState, Position, Player, opponent } from '../../models/board';
 import Board from '../Board';
 
+import './styles.css';
+
 function Game(props: GameProps) {
   const [board, setBoard] = useState(BoardState.empty);
   const [nextPlayer, setPlayer] = useState<Player | null>(Player.X);
@@ -34,12 +36,12 @@ function Game(props: GameProps) {
       `Next player: ${nextPlayer}`;
 
   return (
-    <div>
+    <div className={`game next-player-${nextPlayer || 'none'}`}>
+      <Board state={board} onClick={handleCellClick} />
       <div className="game-info">
         <div>{gameStatus}</div>
         <button onClick={restart}>Restart</button>
       </div>
-      <Board state={board} onClick={handleCellClick} />
     </div>
   );
 }

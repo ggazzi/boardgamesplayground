@@ -1,0 +1,12 @@
+.game-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.game.next-player-X .board-cell.mark-none:hover {
+  background: color-mix(in srgb, var(--color-player-X) 50%, var(--color-player-none) 50%);
+}
+
+.game.next-player-O .board-cell.mark-none:hover {
+  background: color-mix(in srgb, var(--color-player-O) 50%, var(--color-player-none) 50%);
+}
