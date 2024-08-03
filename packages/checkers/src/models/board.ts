@@ -1,6 +1,6 @@
 import { Player } from "./player";
 
-export type CellState = Piece | { type: null };
+export type CellState = Piece | null;
 
 export type Piece = {
   type: 'man' | 'king';

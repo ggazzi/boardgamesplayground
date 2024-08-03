@@ -1,9 +1,8 @@
-import { describe, it, test, expect } from 'bun:test';
+import { describe, it, expect } from 'bun:test';
 import fc from 'fast-check';
 
 import { Position, BOARD_WIDTH, CellState, BoardState, Piece } from './board';
 import player from './player.test';
-import { Player } from './player';
 
 const BOARD_ARRAY_SIZE = BOARD_WIDTH * BOARD_WIDTH;
 
@@ -21,7 +20,7 @@ function arbPiece(): fc.Arbitrary<Piece> {
 }
 
 function arbCellState(): fc.Arbitrary<CellState> {
-  return arbi.oneof(arbPiece(), arbi.constant({ type: null }));
+  return arbi.oneof(arbPiece(), arbi.constant(null));
 }
 
 function arbBoardState(): fc.Arbitrary<BoardState> {

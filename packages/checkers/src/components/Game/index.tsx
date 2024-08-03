@@ -1,21 +1,27 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-import { Player, opponent } from '../../models/player';
-import { BoardState } from '../../models/board';
+import { Player } from '../../models/player';
+import { BoardState, Position } from '../../models/board';
 import Board from '../Board';
 
 import './styles.css';
 
+const INITIAL_BOARD = BoardState.empty()
+  .set(Position.new(0, 0), { type: 'man', player: Player.White })
+  .set(Position.new(3, 0), { type: 'king', player: Player.Black })
+
+const INITIAL_PLAYER = Player.White;
+
 function Game() {
-  const [board, setBoard] = useState(BoardState.empty);
-  const [nextPlayer, setPlayer] = useState<Player | null>(Player.White);
+  const [board, setBoard] = useState(INITIAL_BOARD);
+  const [nextPlayer, setPlayer] = useState<Player | null>(INITIAL_PLAYER);
 
   const restart = () => {
-    setBoard(BoardState.empty);
-    setPlayer(Player.White);
+    setBoard(INITIAL_BOARD);
+    setPlayer(INITIAL_PLAYER);
   };
 
-  const gameStatus = "TODO";
+  const gameStatus = `Next player: ${nextPlayer}`;
 
   return (
     <div className={`game`}>

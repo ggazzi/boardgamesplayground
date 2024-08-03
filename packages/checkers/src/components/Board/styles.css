@@ -17,6 +17,37 @@
 }
 
 .board-cell {
+  position: relative;
   background: var(--color-background-cell);
+}
+
+.board-cell.piece::before {
+  content: var(--piece-content);
+  color: var(--piece-color-main);
+  -webkit-text-stroke: 1px var(--piece-color-outline);
+
+  font-size: 3em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.board-cell.piece-player-w {
+  --piece-color-main: #fff;
+  --piece-color-outline: #000;
+}
+
+.board-cell.piece-player-b {
+  --piece-color-main: #000;
+  --piece-color-outline: #fff;
+}
+
+.board-cell.piece-type-man {
+  --piece-content: '♟';
+}
+
+.board-cell.piece-type-king {
+  --piece-content: '♚';
 }
 

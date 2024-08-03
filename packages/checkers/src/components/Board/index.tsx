@@ -25,9 +25,12 @@ type BoardProps = {
 }
 
 function Cell({ position, state }: CellProps) {
-  const parity = (position.row + position.col) % 2 === 0 ? 'even' : 'odd';
+  const parityClass = `board-cell-${(position.row + position.col) % 2 === 0 ? 'even' : 'odd'}`;
+  const pieceClass = state ? `piece piece-type-${state.type} piece-player-${state.player}` : '';
+
+
   return (
-    <div className={`board-cell board-cell-${parity} mark-${state}`} />
+    <div className={`board-cell ${parityClass} ${pieceClass}`} />
   );
 }
 
