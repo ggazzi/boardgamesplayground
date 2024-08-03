@@ -3,10 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-import { Board as BoardState, Position, Player } from './models/board';
-import Board from './components/Board';
-
-const board = BoardState.empty.set(Position.new(0, 0), Player.X).set(Position.new(1, 1), Player.O).set(Position.new(2, 2), Player.X);
+import Game from './components/Game';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -23,7 +20,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <Board state={board} />
+        <Game />
       </div>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
