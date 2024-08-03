@@ -11,6 +11,17 @@ export class Position {
     this.#index = index;
   }
 
+  /** Return an array of all possible board positions.
+   *
+   * The positions are sorted from the top left to the bottom right,
+   * and grouped by row.
+   */
+  static all(): Position[] {
+    return Array(BOARD_WIDTH * BOARD_WIDTH)
+      .fill(null)
+      .map((_, index) => new Position(index));
+  }
+
   static fromIndex(index: number): Position {
     if (index < 0 || index >= BOARD_WIDTH * BOARD_WIDTH) {
       throw new Error(`Invalid index ${index}, must be between 0 and ${BOARD_WIDTH * BOARD_WIDTH}`);

@@ -1,0 +1,5 @@
+.game-info {
+  display: flex;
+  flex-direction: column;
+}
+

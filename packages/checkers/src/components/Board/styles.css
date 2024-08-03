@@ -1,0 +1,22 @@
+.board {
+  display: grid;
+  aspect-ratio: 1 / 1;
+  grid-template-columns: repeat(var(--num-columns), 1fr);
+  grid-template-rows: repeat(var(--num-rows), 1fr);
+
+  --color-background-odd: rgba(255, 255, 255, 0.13);
+  --color-background-even: rgba(255, 255, 255, 0.87);
+}
+
+.board-cell-odd {
+  --color-background-cell: var(--color-background-odd);
+}
+
+.board-cell-even {
+  --color-background-cell: var(--color-background-even);
+}
+
+.board-cell {
+  background: var(--color-background-cell);
+}
+
