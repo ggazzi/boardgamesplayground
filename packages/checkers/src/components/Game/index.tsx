@@ -1,7 +1,8 @@
 import { useState } from 'react'
 
 import { Player } from '../../models/player';
-import { BoardState, Position } from '../../models/board';
+import { Position } from '../../models/position';
+import { BoardState } from '../../models/board';
 import Board from '../Board';
 
 import './styles.css';

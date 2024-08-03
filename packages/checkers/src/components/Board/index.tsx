@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { BOARD_WIDTH, BoardState, CellState, Position } from '../../models/board';
+import { Position, BOARD_WIDTH } from '../../models/position';
+import { BoardState, CellState } from '../../models/board';
 
 import './styles.css';
 
