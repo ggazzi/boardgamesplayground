@@ -1,0 +1,7 @@
+{
+  "name": "tictactoe",
+  "private": "true",
+  "workspaces": [
+    "packages/*"
+  ]
+}
