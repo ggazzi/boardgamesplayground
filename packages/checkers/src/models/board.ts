@@ -54,5 +54,25 @@ export class Position {
 }
 
 export class BoardState {
+  #cells: CellState[];
+
+  private constructor(cells: CellState[]) {
+    this.#cells = cells;
+  }
+
+  static empty(): BoardState {
+    return new BoardState(Array(BOARD_WIDTH * BOARD_WIDTH).fill(null));
+  }
+
+  static fromArray(cells: CellState[]): BoardState {
+    if (cells.length !== BOARD_WIDTH * BOARD_WIDTH) {
+      throw new Error(`Invalid number of cells: ${cells.length}`);
+    }
+    return new BoardState(cells);
+  }
+
+  toArray(): CellState[] {
+    return [...this.#cells];
+  }
 }
 

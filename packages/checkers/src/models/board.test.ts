@@ -1,8 +1,9 @@
 import { describe, it, test, expect } from 'bun:test';
 import fc from 'fast-check';
 
-import { Position, BOARD_WIDTH } from './board';
+import { Position, BOARD_WIDTH, CellState, BoardState } from './board';
 import player from './player.test';
+import { Player } from './player';
 
 const BOARD_ARRAY_SIZE = BOARD_WIDTH * BOARD_WIDTH;
 
@@ -12,9 +13,13 @@ function arbPosition(): fc.Arbitrary<Position> {
   return arbi.nat(BOARD_ARRAY_SIZE - 1).map(Position.fromIndex);
 }
 
+function arbCellState(): fc.Arbitrary<CellState> {
+  return arbi.constantFrom(Player.Black, Player.White, null);
+}
 
 const arbitrary = {
   position: arbPosition,
+  cellState: arbCellState,
 };
 
 export default arbitrary;
@@ -74,6 +79,31 @@ describe('Position', () => {
     it('returns the row and column as an array', () => {
       fc.assert(fc.property(arb.position(), (pos: Position) => {
         expect(pos.toArray()).toEqual([pos.row, pos.col]);
+      }));
+    });
+  });
+
+});
+
+describe('BoardState', () => {
+
+  describe('fromArray', () => {
+    const ARRAY_SIZE = BOARD_WIDTH * BOARD_WIDTH;
+    it('is an inverse for toArray', () => {
+      fc.assert(fc.property(arb.array(arb.cellState(), { minLength: ARRAY_SIZE, maxLength: ARRAY_SIZE }), (cells) => {
+        expect(BoardState.fromArray(cells).toArray()).toEqual(cells);
+      }));
+    })
+
+    it('throws an error when the array is too small', () => {
+      fc.assert(fc.property(arb.array(arb.cellState(), { maxLength: ARRAY_SIZE - 1 }), (cells) => {
+        expect(() => BoardState.fromArray(cells)).toThrow();
+      }));
+    });
+
+    it('throws an error when the array is too large', () => {
+      fc.assert(fc.property(arb.array(arb.cellState(), { minLength: ARRAY_SIZE + 1 }), (cells) => {
+        expect(() => BoardState.fromArray(cells)).toThrow();
       }));
     });
   });
