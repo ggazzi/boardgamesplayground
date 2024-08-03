@@ -4,6 +4,10 @@ export enum Player {
   O = 'O',
 }
 
+export function opponent(player: Player): Player {
+  return player === Player.X ? Player.O : Player.X;
+}
+
 export type Mark = Player | null;
 
 export class Position {
@@ -61,7 +65,9 @@ export class Position {
   }
 }
 
-const WINNING_LINES = [
+export type Line = [Position, Position, Position];
+
+const WINNING_LINES: Line[] = [
   // rows
   [0, 1, 2],
   [3, 4, 5],
@@ -75,7 +81,7 @@ const WINNING_LINES = [
   // diagonals
   [0, 4, 8],
   [2, 4, 6],
-];
+].map((line) => line.map(Position.fromIndex) as Line);
 
 export class Board {
   #cells: (Mark)[];
@@ -113,4 +119,40 @@ export class Board {
     return new Board(cells);
   }
 
+  isFull(): boolean {
+    return this.#cells.every((cell) => cell !== null);
+  }
+
+  hasEnded(): boolean {
+    return this.isFull() || this.hasWinner();
+  }
+
+  isTie(): boolean {
+    return this.isFull() && !this.hasWinner();
+  }
+
+  hasWinner(): boolean {
+    return this.winner !== null;
+  }
+
+  emptyCells(): Position[] {
+    return Position.all().filter((pos) => this.get(pos) === null);
+  }
+
+  winningLines(): Line[] {
+    return WINNING_LINES.filter((line) => {
+      const [firstMark, ...otherMarks] = line.map((pos) => this.get(pos));
+      return otherMarks.every((mark) => mark === firstMark) && firstMark !== null;
+    });
+  }
+
+  get winner(): Player | null {
+    const winnerAtLine = (ps: Position[]): Mark => {
+      const [firstMark, ...otherMarks] = ps.map((p) => this.get(p));
+      return otherMarks.every((mark) => mark === firstMark) ? firstMark : null;
+    }
+
+    const winners = WINNING_LINES.map(winnerAtLine).filter((mark) => mark !== null);
+    return winners.length === 1 ? winners[0] : null;
+  }
 }
