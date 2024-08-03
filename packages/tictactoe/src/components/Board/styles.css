@@ -1,0 +1,38 @@
+.board {
+  display: grid;
+  aspect-ratio: 1 / 1;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.board-cell {
+  margin: 5%;
+  background: #595959;
+  position: relative;
+}
+
+.mark-X {
+  background: #ff0000;
+}
+
+.board-cell.mark-X::before {
+  content: 'X';
+  font-size: 3em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.board-cell.mark-O {
+  background: #0000ff;
+}
+
+.board-cell.mark-O::before {
+  content: 'O';
+  font-size: 3em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
