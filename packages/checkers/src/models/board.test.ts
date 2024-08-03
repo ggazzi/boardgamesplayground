@@ -1,7 +1,7 @@
 import { describe, it, test, expect } from 'bun:test';
 import fc from 'fast-check';
 
-import { Position, BOARD_WIDTH, CellState, BoardState } from './board';
+import { Position, BOARD_WIDTH, CellState, BoardState, Piece } from './board';
 import player from './player.test';
 import { Player } from './player';
 
@@ -13,8 +13,15 @@ function arbPosition(): fc.Arbitrary<Position> {
   return arbi.nat(BOARD_ARRAY_SIZE - 1).map(Position.fromIndex);
 }
 
+function arbPiece(): fc.Arbitrary<Piece> {
+  return fc.record({
+    type: fc.constantFrom('man', 'king'),
+    player: arbi.player(),
+  });
+}
+
 function arbCellState(): fc.Arbitrary<CellState> {
-  return arbi.constantFrom(Player.Black, Player.White, null);
+  return arbi.oneof(arbPiece(), arbi.constant({ type: null }));
 }
 
 function arbBoardState(): fc.Arbitrary<BoardState> {
@@ -23,6 +30,7 @@ function arbBoardState(): fc.Arbitrary<BoardState> {
 
 const arbitrary = {
   position: arbPosition,
+  piece: arbPiece,
   cellState: arbCellState,
   boardState: arbBoardState,
 };

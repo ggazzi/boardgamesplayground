@@ -1,8 +1,13 @@
 import { Player } from "./player";
 
-export type CellState = Player | null;
+export type CellState = Piece | { type: null };
 
-export const BOARD_WIDTH = 3;
+export type Piece = {
+  type: 'man' | 'king';
+  player: Player;
+};
+
+export const BOARD_WIDTH = 4;
 
 export class Position {
   #index: number;
