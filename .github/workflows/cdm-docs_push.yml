@@ -1,0 +1,17 @@
+name: cdm-docs
+on: push
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build:
+    name: build & deploy (cdm-docs)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build
+        run: echo "Build"
+

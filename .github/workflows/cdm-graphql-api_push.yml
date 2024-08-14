@@ -1,0 +1,17 @@
+name: cdm-graphql-api_push.yml
+on: push
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build:
+    name: build (cdm-graphql-api)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Test
+        run: echo "Test"
+
